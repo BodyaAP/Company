@@ -1,0 +1,80 @@
+﻿@model WEB.ViewModels.EmployeeViewModel
+@using WEB.Infrastructure
+
+@{
+    bool isType = ViewBag.Type == TypeEntity.SickLeave;
+    string action = isType ? "AddSickLeave" : "AddVacation";
+    string actionStatistic = isType ? "GetIntervalSickLeavesEmployee" : "GetIntervalVacationsEmployee";
+    ViewBag.Title = isType ? "Лікарняні" : "Відпустки";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <a href="@Url.Action("Index")">Назад</a>
+
+    <a href="@Url.Action(action, "Calendar", new { employeeId = Model.Id})">@(isType ? "Додати лікарняний" : "Додати відпустку")</a>
+
+    <br />
+
+    <div>
+        <form action="@Url.Action(actionStatistic, "Statistic", new { employeeId = Model.Id})" method="post">
+            <div>
+                <label for="StartInterval">Початок</label>
+                <input type="date" name="StartInterval" />
+            </div>
+            <div>
+                <label for="EndInterval">Кінець</label>
+                <input type="date" name="EndInterval" />
+            </div>
+            <div>
+                <input type="submit" value="Знайти" />
+            </div>
+        </form>
+    </div>
+
+    <br />
+
+    <p>Співробітник: @Model.FirstName @Model.LastName</p>
+
+    @if ((isType && Model.SickLeaves.Any()) || (!isType && Model.Vacations.Any()))
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Початок</th>
+                    <th>Кінець</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (isType)
+                {
+                    foreach (var item in Model.SickLeaves)
+                    {
+                        <tr>
+                            <td>@item.Start</td>
+                            <td>@item.End</td>
+                            <td><a href="@Url.Action("DeleteSickLeave", "Calendar", new { id = item.Id })">Видалити</a></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    foreach (var item in Model.Vacations)
+                    {
+                        <tr>
+                            <td>@item.Start</td>
+                            <td>@item.End</td>
+                            <td><a href="@Url.Action("DeleteVacation", "Calendar", new { id = item.Id })">Видалити</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список порожній</p>
+    }
+</div>

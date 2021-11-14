@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns = "urn:nhibernate-mapping-2.2"
+                   assembly ="DataLayer" namespace="DataLayer.Entity">
+
+  <class name="SickLeave" table="SickLeaves">
+    <id name ="Id">
+      <generator class ="guid.comb"/>
+    </id>
+
+    <property name ="Start"/>
+    <property name ="End" column="Finish"/>
+
+    <many-to-one name="Employee" column="EmployeeId" lazy="false" fetch="join" cascade="save-update"/>
+  </class>
+
+</hibernate-mapping>

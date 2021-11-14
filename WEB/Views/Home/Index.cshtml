@@ -1,0 +1,46 @@
+﻿@model IReadOnlyList<BusinessLogicLayer.DTO.EmployeeInfos>
+@using WEB.Infrastructure
+
+@{
+    ViewBag.Title = "Співробітники";
+}
+
+<h2>Співробітники</h2>
+
+<div>
+    <a href="@Url.Action("AddEmployee")">Додати співробітника</a>
+    <a href="@Url.Action("GetSickLeaves", "Calendar")">Лікарняні</a>
+    <a href="@Url.Action("GetVacations", "Calendar")">Відпустки</a>
+
+    @if (Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Прізвище</th>
+                    <th>Ім'я</th>
+                    <th>Лікарняні</th>
+                    <th>Відпустки</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.LastName</td>
+                        <td>@employee.FirstName</td>
+                        <td><a href="@Url.Action("GetEmployeeInfo", new { id = employee.Id, type = TypeEntity.SickLeave})">@employee.CountSickLeaves</a></td>
+                        <td><a href="@Url.Action("GetEmployeeInfo", new { id = employee.Id, type = TypeEntity.Vacation})">@employee.CountVacation</a></td>
+                        <td><a href="@Url.Action("EditEmployee", new { id = employee.Id})">Редагувати</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список порожній</p>
+    }
+</div>
+

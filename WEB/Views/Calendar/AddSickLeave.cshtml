@@ -1,0 +1,28 @@
+﻿@model WEB.ViewModels.SickLeaveViewModel
+
+@{
+    ViewBag.Title = "Додати лікарняний";
+}
+
+<h2>Додати лікарняний</h2>
+
+<div>
+    <a href="@Url.Action("Index", "Home")">Назад</a>
+
+    <form action="@Url.Action("AddSickLeave")" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Employee.Id" value="@Model.Employee.Id" />
+
+        <div>
+            <label for="Start">Початок</label>
+            <input type="date" name="Start" />
+        </div>
+        <div>
+            <label for="End">Кінець</label>
+            <input type="date" name="End" />
+        </div>
+        <div>
+            <input type="submit" value="Додати" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+﻿@model WEB.ViewModels.EmployeeViewModel
+
+@{
+    ViewBag.Title = "Додати співробітника";
+}
+
+<h2>Додати співробітника</h2>
+
+<div>
+    <a href="@Url.Action("Index")">Назад</a>
+
+    <form action="@Url.Action("AddEmployee")" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="LastName">Прізвище</label>
+            <div>
+                @Html.TextBoxFor(m => m.LastName)
+            </div>
+        </div>
+
+        <div>
+            <label for="FirstName">Ім'я</label>
+            <div>
+                @Html.TextBoxFor(m => m.FirstName)
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Додати співробітника" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WEB.ViewModels.VacationViewModel>
+
+@{
+    ViewBag.Title = "Відпустки";
+}
+
+<h2>Відпустки</h2>
+
+<div>
+    <a href="@Url.Action("Index", "Home")">Назад</a>
+
+    <br />
+
+    <div>
+        <form action="@Url.Action("GetIntervalVacations", "Statistic")" method="post">
+            <div>
+                <label for="StartInterval">Початок</label>
+                <input type="date" name="StartInterval" />
+            </div>
+            <div>
+                <label for="EndInterval">Кінець</label>
+                <input type="date" name="EndInterval" />
+            </div>
+            <div>
+                <input type="submit" value="Знайти" />
+            </div>
+        </form>
+    </div>
+
+    <br />
+
+    @if (Model.Any())
+    {
+        <table>
+            <tr>
+                <th>Прізвище</th>
+                <th>Ім'я'</th>
+                <th>Початок</th>
+                <th>Кінець</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Employee.LastName</td>
+                    <td>@item.Employee.FirstName</td>
+                    <td>@item.Start</td>
+                    <td>@item.End</td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>Список порожній</p>
+    }
+</div>
